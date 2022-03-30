@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Parse
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,6 +17,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        let currentUser = PFUser.current()
+        if currentUser != nil{
+            let board = UIStoryboard(name: "Main", bundle: nil)
+            let tabBar = board.instantiateViewController(withIdentifier: "tabBar") as! UITabBarController
+            window?.rootViewController = tabBar
+            
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
@@ -46,7 +54,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    func rememberUser() {
+        
+        let user : String? = UserDefaults.standard.string(forKey: "username")
+        
+                            //EĞER KULLANICI KAYITLI İSE ANA EKRANI TAB BAR OLARAK AÇ
+        if user != nil {
+            
+            let board : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            let tabBar = board.instantiateViewController(withIdentifier: "tabBar") as! UITabBarController
+            
+                            //BAŞLANGIÇ OKUNU TAB BARA ALMA
+            
+            window?.rootViewController = tabBar
+            
+        }
 
 
 }
 
+}
+
+
+}
